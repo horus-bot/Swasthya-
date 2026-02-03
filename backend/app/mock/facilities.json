@@ -1,0 +1,44 @@
+[
+  {
+    "id": "F001",
+    "name": "General Hospital Chennai",
+    "type": "Hospital",
+    "zone": "North",
+    "bed_occupancy": 92.0,
+    "icu_occupancy": 80.0,
+    "opd_load": 850,
+    "staff_availability": 60,
+    "supplies_status": "Low",
+    "status": "Critical",
+    "lat": 13.0827,
+    "lng": 80.2707
+  },
+  {
+    "id": "F002",
+    "name": "Anna Nagar Clinic",
+    "type": "Clinic",
+    "zone": "West",
+    "bed_occupancy": 40.0,
+    "icu_occupancy": 0.0,
+    "opd_load": 120,
+    "staff_availability": 90,
+    "supplies_status": "Good",
+    "status": "Safe",
+    "lat": 13.0850,
+    "lng": 80.2100
+  },
+  {
+    "id": "F003",
+    "name": "Adyar City Hospital",
+    "type": "Hospital",
+    "zone": "South",
+    "bed_occupancy": 75.0,
+    "icu_occupancy": 60.0,
+    "opd_load": 450,
+    "staff_availability": 85,
+    "supplies_status": "Good",
+    "status": "Watch",
+    "lat": 13.0067,
+    "lng": 80.2577
+  }
+]
