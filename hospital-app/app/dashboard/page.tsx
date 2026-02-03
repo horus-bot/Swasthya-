@@ -3,6 +3,7 @@ import BedStatus from "./components/BedStatus";
 import EquipmentStatus from "./components/EquipmentStatus";
 import { AppointmentCard } from "./components/AppointmentCard";
 
+
 const appointments = [
   {
     id: 1,
@@ -61,8 +62,14 @@ export default function DashboardPage() {
           {appointments.map((appt) => (
             <AppointmentCard key={appt.id} {...appt} />
           ))}
+          <div className="bg-red-500 text-white p-4">
+  Tailwind test
+</div>
+
+        
         </div>
       </div>
     </div>
+    
   );
 }
