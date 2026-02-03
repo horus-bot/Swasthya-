@@ -7,6 +7,7 @@ mod core;
 mod routes;
 mod services;
 mod schemas;
+mod error;
 
 use crate::core::config::Config;
 use crate::services::python_client::PythonClient;

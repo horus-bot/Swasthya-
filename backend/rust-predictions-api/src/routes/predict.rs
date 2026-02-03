@@ -2,6 +2,7 @@ use axum::{Router, routing::post, routing::get, Json, extract::State};
 use serde_json::Value;
 
 use crate::AppState;
+use crate::error::AppError;
 use crate::schemas::predict::{
     OverloadPredictionRequest,
     OutbreakSeverityRequest
@@ -17,55 +18,34 @@ pub fn router() -> Router<AppState> {
 async fn predict_overload(
     State(state): State<AppState>,
     Json(request): Json<OverloadPredictionRequest>,
-) -> Json<Value> {
+) -> Result<Json<Value>, AppError> {
     // Convert request to JSON
-    let payload = serde_json::to_value(request).unwrap();
+    let payload = serde_json::to_value(request)?;
 
     // Call Python service
-    match state.python_client.call_python("/predict/overload", payload).await {
-        Ok(response) => Json(response),
-        Err(e) => {
-            eprintln!("Error calling Python service: {}", e);
-            Json(serde_json::json!({
-                "error": "Failed to get overload prediction",
-                "details": e.to_string()
-            }))
-        }
-    }
+    let response = state.python_client.call_python("/predict/overload", payload).await?;
+    
+    Ok(Json(response))
 }
 
 async fn predict_outbreak_severity(
     State(state): State<AppState>,
     Json(request): Json<OutbreakSeverityRequest>,
-) -> Json<Value> {
+) -> Result<Json<Value>, AppError> {
     // Convert request to JSON
-    let payload = serde_json::to_value(request).unwrap();
+    let payload = serde_json::to_value(request)?;
 
     // Call Python service
-    match state.python_client.call_python("/predict/outbreak-severity", payload).await {
-        Ok(response) => Json(response),
-        Err(e) => {
-            eprintln!("Error calling Python service: {}", e);
-            Json(serde_json::json!({
-                "error": "Failed to get outbreak severity",
-                "details": e.to_string()
-            }))
-        }
-    }
+    let response = state.python_client.call_python("/predict/outbreak-severity", payload).await?;
+
+    Ok(Json(response))
 }
 
 async fn get_kpis(
     State(state): State<AppState>,
-) -> Json<Value> {
+) -> Result<Json<Value>, AppError> {
     // Call Python service
-    match state.python_client.get_python("/predict/kpis").await {
-        Ok(response) => Json(response),
-        Err(e) => {
-            eprintln!("Error calling Python service: {}", e);
-            Json(serde_json::json!({
-                "error": "Failed to get KPIs",
-                "details": e.to_string()
-            }))
-        }
-    }
+    let response = state.python_client.get_python("/predict/kpis").await?;
+
+    Ok(Json(response))
 }
