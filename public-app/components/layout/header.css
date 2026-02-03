@@ -9,6 +9,10 @@
   top: 0;
   z-index: 1000;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Fixed height to prevent expansion */
+  height: 80px;
+  min-height: 80px;
+  max-height: 80px;
 }
 
 .header.scrolled {
@@ -20,13 +24,19 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+  /* Ensure full height usage */
+  height: 100%;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  /* Use full container height */
+  height: 100%;
+  /* Prevent content from expanding */
+  min-height: 80px;
+  max-height: 80px;
 }
 
 .brand {
@@ -34,6 +44,8 @@
   align-items: center;
   gap: 1rem;
   z-index: 1001;
+  /* Prevent brand from expanding */
+  flex-shrink: 0;
 }
 
 .brand-title {
@@ -46,10 +58,10 @@
   margin: 0;
   letter-spacing: -0.5px;
   transition: all 0.3s ease;
-}
-
-.brand-title:hover {
-  transform: scale(1.05);
+  /* Prevent text wrapping */
+  white-space: nowrap;
+  /* Fixed line height */
+  line-height: 1.2;
 }
 
 .brand-subtitle {
@@ -57,6 +69,10 @@
   color: #64748b;
   font-weight: 500;
   margin-left: 0.5rem;
+  /* Prevent text wrapping */
+  white-space: nowrap;
+  /* Fixed line height */
+  line-height: 1.2;
 }
 
 /* Desktop Navigation */
@@ -64,6 +80,8 @@
   display: flex;
   gap: 3rem;
   align-items: center;
+  /* Prevent nav from expanding */
+  flex-shrink: 0;
 }
 
 .nav-link {
@@ -74,6 +92,10 @@
   position: relative;
   padding: 0.5rem 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Prevent text wrapping */
+  white-space: nowrap;
+  /* Fixed line height */
+  line-height: 1.2;
 }
 
 .nav-link::after {
@@ -113,6 +135,8 @@
   padding: 0.5rem;
   z-index: 1001;
   position: relative;
+  /* Prevent button from expanding */
+  flex-shrink: 0;
 }
 
 .menu-toggle {
@@ -264,6 +288,8 @@
   
   .header-content {
     height: 70px;
+    min-height: 70px;
+    max-height: 70px;
   }
   
   .brand-title {
@@ -276,8 +302,15 @@
 }
 
 @media (max-width: 480px) {
-  .header-content {
+  .header {
     height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+  }
+  
+  .header-content {
+    min-height: 60px;
+    max-height: 60px;
   }
   
   .brand-title {
