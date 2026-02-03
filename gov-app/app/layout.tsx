@@ -6,7 +6,7 @@ import AppShell from "@/components/layout/AppShell";
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GovAnalytics - Health Command Center",
+  title: "Swasthya - Health Command Center",
   description: "Monitor, Predict, and Respond to Health Crises",
 };
 
