@@ -62,9 +62,7 @@ export default function DashboardPage() {
           {appointments.map((appt) => (
             <AppointmentCard key={appt.id} {...appt} />
           ))}
-          <div className="bg-red-500 text-white p-4">
-  Tailwind test
-</div>
+   
 
         
         </div>
