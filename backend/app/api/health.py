@@ -8,6 +8,6 @@ async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
-        "service": "GovAnalytics Healthcare API",
+        "service": "Swasthya Healthcare API",
         "version": "1.0.0"
     }

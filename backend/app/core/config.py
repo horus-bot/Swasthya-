@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # API Settings
-    app_name: str = "GovAnalytics Healthcare API"
+    app_name: str = "Swasthya Healthcare API"
     debug: bool = True
     version: str = "1.0.0"
 
@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     model_path: str = "./models/healthcare_predictor.pkl"
 
     # CORS Settings
-    allowed_origins: list = ["http://localhost:3000", "https://gov-analytics.tn.gov.in"]
+    allowed_origins: list = ["http://localhost:3000", "https://swasthya.tn.gov.in"]
 
     class Config:
         env_file = ".env"

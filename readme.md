@@ -1,8 +1,8 @@
-# GovAnalytics Backend Architecture 🚀
+# Swasthya Backend Architecture 🚀
 
 ## Hybrid High-Performance Systems
 
-The **GovAnalytics** backend employs a modern **hybrid microservices architecture** designed to balance high-concurrency performance with advanced data science capabilities. It combines **Rust** for the edge gateway and **Python** for the intelligence engine.
+The **Swasthya** backend employs a modern **hybrid microservices architecture** designed to balance high-concurrency performance with advanced data science capabilities. It combines **Rust** for the edge gateway and **Python** for the intelligence engine.
 
 ---
 
@@ -151,4 +151,4 @@ backend/
 4. **Validation:** Rust's strong typing ensures that "garbage in" never reaches the expensive ML models ("garbage out").
 
 ---
-*GovAnalytics Backend Team © 2026*
+*Swasthya Backend Team © 2026*
