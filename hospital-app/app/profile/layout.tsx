@@ -11,7 +11,6 @@ import {
   Bell,
   User,
 } from "lucide-react";
-import TopBar from "./components/TopBar";
 
 function SidebarItem({
   icon,
@@ -122,7 +121,6 @@ export default function DashboardLayout({
 
       {/* Main content */}
       <main className="flex-1 p-8">
-        <TopBar />
         {children}
       </main>
     </div>
