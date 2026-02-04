@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { supabase } from '../lib/api/supabase';
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,6 @@ export default function SignupPage() {
     confirmPassword: '',
     department: '',
     role: '',
-    staffId: '',
     phone: ''
   });
   const [loading, setLoading] = useState(false);
@@ -36,6 +36,11 @@ export default function SignupPage() {
     }));
   };
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return emailRegex.test(email);
+  };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -45,6 +50,12 @@ export default function SignupPage() {
     // Basic validation
     if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword || !formData.department || !formData.role) {
       setError('Please fill in all required fields');
+      setLoading(false);
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      setError('Please enter a valid email address');
       setLoading(false);
       return;
     }
@@ -61,18 +72,36 @@ export default function SignupPage() {
       return;
     }
 
-    if (!formData.email.includes('@')) {
-      setError('Please enter a valid email address');
-      setLoading(false);
-      return;
-    }
+        try {
+      // Supabase signup
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
 
-    try {
-      // Simulate API call for registration
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Mock registration success
-      setSuccess('Account created successfully! Redirecting to login...');
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      // Update profile AFTER signup
+      if (data.user) {
+        const { error: profileError } = await supabase.from('profiles').update({
+          full_name: formData.fullName,
+          department: formData.department,
+          role: formData.role,
+          phone_number: formData.phone,
+        }).eq('id', data.user.id);
+
+        if (profileError) {
+          setError('Profile update failed: ' + profileError.message);
+          setLoading(false);
+          return;
+        }
+      }
+
+      setSuccess('Signup successful! Please check your email for verification. Redirecting to login...');
       
       // Clear form
       setFormData({
@@ -82,14 +111,13 @@ export default function SignupPage() {
         confirmPassword: '',
         department: '',
         role: '',
-        staffId: '',
         phone: ''
       });
 
-      // Redirect to login after 2 seconds
+      // Redirect to login after 3 seconds
       setTimeout(() => {
         router.push('/login');
-      }, 2000);
+      }, 3000);
 
     } catch (error) {
       setError('Registration failed. Please try again.');
@@ -98,34 +126,6 @@ export default function SignupPage() {
       setLoading(false);
     }
   };
-
-  const departments = [
-    'Emergency Department',
-    'Cardiology',
-    'Neurology',
-    'Orthopedics',
-    'Pediatrics',
-    'Gynecology',
-    'General Surgery',
-    'Internal Medicine',
-    'Radiology',
-    'Laboratory',
-    'Pharmacy',
-    'Administration'
-  ];
-
-  const roles = [
-    'Doctor',
-    'Nurse',
-    'Lab Technician',
-    'Pharmacist',
-    'Radiologist',
-    'Administrative Staff',
-    'Receptionist',
-    'Security',
-    'Maintenance',
-    'Manager'
-  ];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-100 px-4 py-8">
@@ -201,72 +201,49 @@ export default function SignupPage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Department *
               </label>
-              <select
+              <input
+                type="text"
                 name="department"
                 value={formData.department}
                 onChange={handleInputChange}
+                placeholder="Emergency Department"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 required
                 disabled={loading}
-              >
-                <option value="">Select Department</option>
-                {departments.map(dept => (
-                  <option key={dept} value={dept}>{dept}</option>
-                ))}
-              </select>
+              />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Role *
               </label>
-              <select
+              <input
+                type="text"
                 name="role"
                 value={formData.role}
                 onChange={handleInputChange}
+                placeholder="Doctor"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 required
                 disabled={loading}
-              >
-                <option value="">Select Role</option>
-                {roles.map(role => (
-                  <option key={role} value={role}>{role}</option>
-                ))}
-              </select>
+              />
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Staff ID
-              </label>
-              <input
-                type="text"
-                name="staffId"
-                value={formData.staffId}
-                onChange={handleInputChange}
-                placeholder="ST001234"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                disabled={loading}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="+91 98765 43210"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                disabled={loading}
-              />
-            </div>
+          {/* Phone Number - Single field centered */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder="+91 98765 43210"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              disabled={loading}
+            />
           </div>
 
           {/* Password */}
@@ -303,6 +280,8 @@ export default function SignupPage() {
               />
             </div>
           </div>
+
+          
 
           <button
             type="submit"
