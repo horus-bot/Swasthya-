@@ -1,7 +1,5 @@
-import Link from "next/link";
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  return (
-    <h1></h1>
-  );
+  redirect('/chatbox');
 }
