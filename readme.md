@@ -50,6 +50,67 @@ The computational core where business logic and data analysis reside. It focuses
 
 ---
 
+## 🎯 Frontend Applications
+
+### **Government Dashboard (`/gov-app`)**
+**Live Deployment:** [https://swasthya-neon.vercel.app/dashboard](https://swasthya-neon.vercel.app/dashboard)  
+**Tech Stack:** Next.js 16, TypeScript, Tailwind CSS, Framer Motion, Lucide React.  
+**Role:** The Command Center for Public Health Officials.
+
+The **gov-app** is a sophisticated web dashboard designed specifically for government health administrators and policymakers. It provides real-time insights, predictive analytics, and decision-support tools to manage public health crises effectively.
+
+#### **🏗️ Architecture & Features**
+
+**Core Dashboard Components:**
+- **📊 Real-Time KPI Dashboard:** Live metrics including hospital occupancy rates, ICU utilization, outbreak hotspots, and resource availability across districts.
+- **🗺️ Interactive Heatmaps:** Geographic visualization of disease spread, facility overload risks, and population density overlays.
+- **📈 Predictive Analytics:** 7-day forecast charts for bed/ICU overload risks and outbreak severity progression.
+- **🚨 Alert Management:** Priority-based notification system for critical health events and resource shortages.
+- **📋 Capacity Planning:** Dynamic facility capacity tracking with automated alerts for threshold breaches.
+
+**Advanced Features:**
+- **🎯 Scenario Simulation:** "What-if" analysis tools for testing intervention strategies (e.g., adding mobile units, opening new clinics).
+- **📱 Mobile-Optimized:** Responsive design ensuring accessibility on tablets and smartphones for field officials.
+- **🔄 Real-Time Synchronization:** WebSocket-like updates from the backend intelligence engine for live data streaming.
+- **🎨 Modern UI/UX:** Glassmorphism effects, smooth animations, and intuitive navigation following government accessibility standards.
+
+#### **🔧 Technical Implementation**
+
+**State Management:**
+- **Client-Side Caching:** Efficient data fetching with SWR for optimal performance.
+- **Error Boundaries:** Comprehensive error handling with user-friendly fallbacks.
+
+**Data Visualization:**
+- **Chart.js Integration:** Interactive charts for time-series data and comparative analysis.
+- **MapBox Integration:** Custom map layers for geographic health data visualization.
+
+**Security & Compliance:**
+- **Role-Based Access:** Different permission levels for district officers, state administrators, and central health ministry officials.
+- **Data Encryption:** End-to-end encryption for sensitive health data transmission.
+- **Audit Logging:** Complete activity tracking for compliance and accountability.
+
+#### **🚀 Deployment & Scaling**
+
+**Vercel Deployment:**
+- **Edge Functions:** Serverless API routes for data processing and authentication.
+- **Global CDN:** Optimized delivery with Vercel's worldwide network for fast loading times.
+- **Automatic Scaling:** Handles traffic spikes during health emergencies.
+
+**Integration Points:**
+- **Backend APIs:** Direct connection to Rust/Python hybrid backend for real-time data.
+- **External Systems:** Planned integration with national health registries and emergency response systems.
+
+#### **📱 User Experience Highlights**
+
+- **Intuitive Navigation:** Sidebar menu with quick access to critical sections.
+- **Dark/Light Mode:** Adaptive theming for extended use in various environments.
+- **Offline Capability:** Progressive Web App features for limited offline functionality.
+- **Accessibility:** WCAG 2.1 AA compliance for users with disabilities.
+
+This dashboard serves as the digital nerve center for public health management, enabling data-driven decision-making during health crises and routine operations alike.
+
+---
+
 ## 🔌 API Reference & Endpoints
 
 ### 1. Prediction Endpoints
