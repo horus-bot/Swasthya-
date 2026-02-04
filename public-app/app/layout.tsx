@@ -1,5 +1,10 @@
 import "./globals.css";
 import Header from "../components/layout/header";
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
 
 export const metadata = {
   title: "Public Healthcare Platform",
