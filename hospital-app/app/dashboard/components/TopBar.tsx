@@ -1,6 +1,21 @@
-import { Bell } from "lucide-react";
+"use client";
+
+import { Bell, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function TopBar() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Clear authentication data
+    localStorage.removeItem('hospital_auth');
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('login_time');
+    
+    // Redirect to login
+    router.push('/login');
+  };
+
   return (
     <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm border border-slate-200 hover:shadow-md transition-all">
       <div className="flex items-center justify-between">
@@ -36,6 +51,16 @@ export default function TopBar() {
           <div className="h-11 w-11 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-sm font-bold text-white shadow-md hover:shadow-lg transition-shadow cursor-pointer">
             DA
           </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-200 hover:border-red-300"
+            title="Logout"
+          >
+            <LogOut size={18} />
+            <span className="text-sm font-medium">Logout</span>
+          </button>
         </div>
       </div>
     </div>
