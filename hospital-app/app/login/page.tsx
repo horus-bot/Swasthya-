@@ -65,16 +65,23 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6] rounded-xl p-2 shadow-md">
+            <svg
+              viewBox="0 0 992 1056"
+              className="w-full h-full"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0 C327.36 0 654.72 0 992 0 C992 348.48 992 696.96 992 1056 C664.64 1056 337.28 1056 0 1056 C0 707.52 0 359.04 0 0 Z"
+                fill="#FDFEFD"
+              />
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Hospital Staff Login
+            Swasthya
           </h1>
           <p className="text-gray-600">
-            Access the hospital management system
+            Hospital Staff Access Portal
           </p>
         </div>
 
@@ -95,7 +102,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="doctor@hospital.gov.in"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent transition-colors"
               required
               disabled={loading}
             />
@@ -110,7 +117,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent transition-colors"
               required
               disabled={loading}
             />
@@ -122,7 +129,7 @@ export default function LoginPage() {
             className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
               loading 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02]'
+                : 'bg-[#3b82f6] hover:bg-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transform hover:scale-[1.02]'
             }`}
           >
             {loading ? (
@@ -140,7 +147,7 @@ export default function LoginPage() {
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             Don't have an account?{' '}
-            <Link href="/signup" className="text-blue-600 hover:text-blue-500 font-medium">
+            <Link href="/signup" className="text-[#3b82f6] hover:text-[#2563eb] font-medium">
               Register here
             </Link>
           </p>
