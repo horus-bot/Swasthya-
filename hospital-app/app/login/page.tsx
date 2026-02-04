@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { supabase } from '../lib/api/supabase';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -31,27 +32,36 @@ export default function LoginPage() {
       return;
     }
 
-    // Simple authentication check - you can replace this with real authentication
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock authentication - accept any email/password for demo
-      // In production, validate against your backend/database
-      if (email.includes('@') && password.length >= 4) {
+      // Supabase authentication
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          setError('Invalid email or password. Please check your credentials.');
+        } else if (error.message.includes('Email not confirmed')) {
+          setError('Please check your email and click the confirmation link before logging in.');
+        } else {
+          setError(error.message);
+        }
+        setLoading(false);
+        return;
+      }
+
+      if (data.user) {
         // Set authentication in localStorage
         localStorage.setItem('hospital_auth', 'true');
         localStorage.setItem('user_email', email);
+        localStorage.setItem('user_id', data.user.id);
         localStorage.setItem('login_time', new Date().toISOString());
-        
-        // Success message
-        console.log('Login successful, redirecting to dashboard...');
         
         // Redirect to dashboard
         router.push('/dashboard');
-      } else {
-        setError('Invalid email or password. Please try again.');
       }
+
     } catch (error) {
       setError('Login failed. Please try again.');
       console.error('Login error:', error);
