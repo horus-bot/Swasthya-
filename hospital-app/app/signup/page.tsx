@@ -132,21 +132,9 @@ export default function SignupPage() {
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6] rounded-xl p-2 shadow-md">
-            <svg
-              viewBox="0 0 992 1056"
-              className="w-full h-full"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0 C327.36 0 654.72 0 992 0 C992 348.48 992 696.96 992 1056 C664.64 1056 337.28 1056 0 1056 C0 707.52 0 359.04 0 0 Z"
-                fill="#FDFEFD"
-              />
-            </svg>
+          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-teal-600 to-teal-400 rounded-xl p-2 shadow-md">
+            <img src="/logo.svg" alt="Swasthya" className="w-full h-full object-contain" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Swasthya
-          </h1>
           <p className="text-gray-600">
             Hospital Staff Registration - Join Our Team
           </p>
@@ -179,7 +167,7 @@ export default function SignupPage() {
                 value={formData.fullName}
                 onChange={handleInputChange}
                 placeholder="Dr. John Doe"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-colors"
                 required
                 disabled={loading}
               />
@@ -214,7 +202,7 @@ export default function SignupPage() {
                 value={formData.department}
                 onChange={handleInputChange}
                 placeholder="Emergency Department"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-colors"
                 required
                 disabled={loading}
               />
@@ -265,7 +253,7 @@ export default function SignupPage() {
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-colors"
                 required
                 disabled={loading}
               />
@@ -296,7 +284,7 @@ export default function SignupPage() {
             className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
               loading 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-[#3b82f6] hover:bg-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transform hover:scale-[1.02]'
+                : 'bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 transform hover:scale-[1.02]'
             }`}
           >
             {loading ? (

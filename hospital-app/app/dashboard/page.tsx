@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import StatCard from "./components/StatCard";
 import BedStatus from "./components/BedStatus";
 import EquipmentStatus from "./components/EquipmentStatus";
 import { AppointmentCard } from "./components/AppointmentCard";
 import { updateAppointmentStatus } from "../lib/api/appointment.service";
+import { getBedStatus, updateBedStatus } from "../lib/api/bedStatus.service";
+import { getEquipment, updateEquipmentStatus } from "../lib/api/equipment.service";
+import { getEquipmentRequests, updateEquipmentRequestStatus } from "../lib/api/equipmentRequest.service";
 
 interface Appointment {
   id: string;
@@ -42,7 +45,74 @@ const initialAppointments: Appointment[] = [
 
 export default function DashboardPage() {
   const [appointments, setAppointments] = useState<Appointment[]>(initialAppointments);
+  const [bedData, setBedData] = useState<any>(null);
+  const [equipmentData, setEquipmentData] = useState<any[]>([]);
+  const [equipmentRequests, setEquipmentRequests] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch bed status
+        try {
+          const { data: beds, error: bedError } = await getBedStatus();
+          if (!bedError && beds && beds.length > 0) {
+            setBedData(beds[0]);
+          } else {
+            // Fallback to mock data if no data returned
+            setBedData({ total_beds: 40, available_beds: 12, occupied_beds: 28 });
+          }
+        } catch (e) {
+          console.warn("Error fetching bed status:", e);
+          setBedData({ total_beds: 40, available_beds: 12, occupied_beds: 28 });
+        }
+
+        // Fetch equipment
+        try {
+          const { data: equipment, error: equipError } = await getEquipment();
+          if (!equipError && equipment) {
+            setEquipmentData(equipment);
+          } else {
+            // Fallback mock data
+            setEquipmentData([
+              { id: "1", equipment_name: "MRI Scanner", status: "available" },
+              { id: "2", equipment_name: "CT Scanner", status: "in_use" },
+              { id: "3", equipment_name: "X-Ray Machine", status: "available" },
+            ]);
+          }
+        } catch (e) {
+          console.warn("Error fetching equipment:", e);
+          setEquipmentData([
+            { id: "1", equipment_name: "MRI Scanner", status: "available" },
+            { id: "2", equipment_name: "CT Scanner", status: "in_use" },
+            { id: "3", equipment_name: "X-Ray Machine", status: "available" },
+          ]);
+        }
+
+        // Fetch equipment requests
+        try {
+          const { data: requests, error: reqError } = await getEquipmentRequests();
+          if (!reqError && requests) {
+            setEquipmentRequests(requests);
+          } else {
+            setEquipmentRequests([]);
+          }
+        } catch (e) {
+          console.warn("Error fetching equipment requests:", e);
+          setEquipmentRequests([]);
+        }
+      } catch (e) {
+        console.error("Error fetching dashboard data:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
 
   const handleAppointmentUpdate = (id: string, newStatus: "pending" | "scheduled" | "completed" | "cancelled") => {
     // optimistic UI update (remove from pending immediately when scheduled)
@@ -127,16 +197,24 @@ export default function DashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <StatCard title="Beds Available" value="12" subtitle="Out of 40" />
+        <StatCard 
+          title="Beds Available" 
+          value={bedData?.available_beds ?? "—"} 
+          subtitle={`Out of ${bedData?.total_beds ?? "—"}`} 
+        />
         <StatCard title="Doctors On Duty" value="8" subtitle="Today" />
         <StatCard title="Avg Waiting Time" value="25 min" subtitle="Emergency" />
-        <StatCard title="Pending Requests" value="3" subtitle="Action needed" />
+        <StatCard 
+          title="Equipment Requests" 
+          value={equipmentRequests.filter((r) => r.status === "pending").length} 
+          subtitle="Pending" 
+        />
       </div>
 
       {/* Resources */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <BedStatus />
-        <EquipmentStatus />
+        <BedStatus data={bedData} onUpdate={updateBedStatus} />
+        <EquipmentStatus data={equipmentData} onUpdate={updateEquipmentStatus} />
       </div>
 
       {/* Appointments */}

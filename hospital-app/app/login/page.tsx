@@ -75,21 +75,9 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6] rounded-xl p-2 shadow-md">
-            <svg
-              viewBox="0 0 992 1056"
-              className="w-full h-full"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0 C327.36 0 654.72 0 992 0 C992 348.48 992 696.96 992 1056 C664.64 1056 337.28 1056 0 1056 C0 707.52 0 359.04 0 0 Z"
-                fill="#FDFEFD"
-              />
-            </svg>
+          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-teal-600 to-teal-400 rounded-xl p-2 shadow-md">
+            <img src="/logo.svg" alt="Swasthya" className="w-full h-full object-contain" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Swasthya
-          </h1>
           <p className="text-gray-600">
             Hospital Staff Access Portal
           </p>
@@ -103,7 +91,7 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
-          <div>
+          <div className="flex items-center justify-between">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address
             </label>
@@ -133,13 +121,20 @@ export default function LoginPage() {
             />
           </div>
 
+          <div className="flex items-center justify-between">
+            <label className="inline-flex items-center text-sm text-gray-600">
+              <input type="checkbox" className="mr-2" /> Remember me
+            </label>
+            <a href="#" className="text-sm text-teal-600 hover:underline">Forgot password?</a>
+          </div>
+
           <button
             type="submit"
             disabled={loading}
             className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
               loading 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-[#3b82f6] hover:bg-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transform hover:scale-[1.02]'
+                : 'bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 transform hover:scale-[1.02]'
             }`}
           >
             {loading ? (
