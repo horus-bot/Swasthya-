@@ -41,7 +41,7 @@ export default function NotificationPage() {
         {reminders.map((item, i) => (
           <div
             key={i}
-            ref={(el) => el && (cardsRef.current[i] = el)}
+            ref={(el) => { if (el) cardsRef.current[i] = el; }}
             className="bg-white rounded-xl shadow p-5 flex items-center justify-between"
           >
             <div>
