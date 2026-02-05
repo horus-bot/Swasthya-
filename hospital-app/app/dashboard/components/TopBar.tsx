@@ -8,19 +8,19 @@ export default function TopBar() {
 
   const handleLogout = () => {
     // Clear authentication data
-    localStorage.removeItem('hospital_auth');
-    localStorage.removeItem('user_email');
-    localStorage.removeItem('login_time');
-    
+    localStorage.removeItem("hospital_auth");
+    localStorage.removeItem("user_email");
+    localStorage.removeItem("login_time");
+
     // Redirect to login
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-white to-[#f0f9ff] rounded-2xl p-6 mb-8 shadow-sm border border-slate-200 hover:shadow-md transition-all group">
       {/* Decorative background */}
-      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#3b82f6] to-[#1e3a8a] opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2\"></div>
-      
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#3b82f6] to-[#1e3a8a] opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+
       <div className="relative z-10 flex items-center justify-between">
         {/* Left: Logo and Hospital Info */}
         <div className="flex items-center gap-4">
@@ -32,7 +32,7 @@ export default function TopBar() {
               className="w-full h-full object-contain"
             />
           </div>
-          
+
           <div className="group/info">
             <h1 className="text-2xl font-bold text-slate-900 group-hover/info:text-[#1e3a8a] transition-colors">
               City General Hospital
@@ -57,7 +57,10 @@ export default function TopBar() {
 
           {/* Notification Bell */}
           <button className="relative cursor-pointer p-2 rounded-lg hover:bg-blue-50 transition-colors group/bell">
-            <Bell className="text-gray-600 group-hover/bell:text-[#3b82f6] transition-colors" size={22} />
+            <Bell
+              className="text-gray-600 group-hover/bell:text-[#3b82f6] transition-colors"
+              size={22}
+            />
             <span className="absolute top-1 right-1 h-3 w-3 bg-red-500 rounded-full animate-pulse"></span>
           </button>
 
