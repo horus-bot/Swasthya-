@@ -4,6 +4,14 @@
 
 The ecosystem is built on a high-performance hybrid backend and consists of three specialized applications that work in tandem to create a unified healthcare network.
 
+## 🚀 Live Demos
+
+**Hackfest 2026 Submission**
+
+- **🏛️ Government App:** [https://swasthya-neon.vercel.app/](https://swasthya-neon.vercel.app/)
+- **🏥 Hospital App:** [https://swasthya-eb2y.vercel.app/](https://swasthya-eb2y.vercel.app/)
+- **👥 Public App:** [https://swasthya-6a8z.vercel.app/](https://swasthya-6a8z.vercel.app/)
+
 ---
 
 ## 🌐 Ecosystem Overview
@@ -114,33 +122,81 @@ The backend employs a **Hybrid Microservices Architecture** that combines the sp
 ## 🚀 Getting Started
 
 ### **Prerequisites**
--   Node.js 18+
--   Python 3.10+
--   Rust (Cargo)
--   Docker (optional)
+- Node.js 18+ (with npm)
+- Python 3.10+
+- Rust (latest stable version with Cargo)
+- Docker (optional, for containerized deployment)
 
-### **Running the Ecosystem**
+### **Step-by-Step Setup Guide**
 
-1.  **Backend (Python):**
-    ```bash
-    cd backend
-    pip install -r requirements.txt
-    uvicorn app.main:app --reload
-    ```
+#### **Step 1: Clone and Navigate to Project**
+```bash
+git clone <repository-url>
+cd swasthya-ecosystem
+```
 
-2.  **API Gateway (Rust):**
-    ```bash
-    cd rust-predictions-api
-    cargo run
-    ```
+#### **Step 2: Set Up Python Backend**
+```bash
+# Navigate to backend directory
+cd backend
 
-3.  **Frontend Applications:**
-    ```bash
-    # For any app (gov-app, public-app, hospital-app)
-    cd [app-name]
-    npm install
-    npm run dev
-    ```
+# Create virtual environment
+python -m venv myvenv
+myvenv\Scripts\activate  # On Windows
+# source myvenv/bin/activate  # On macOS/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the Python backend
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+#### **Step 3: Set Up Rust API Gateway**
+```bash
+# Open new terminal and navigate to Rust API
+cd rust-predictions-api
+
+# Build and run the Rust service
+cargo run
+```
+
+#### **Step 4: Set Up Frontend Applications**
+
+**For Government App:**
+```bash
+cd gov-app
+npm install
+npm run dev
+# Access at http://localhost:3000
+```
+
+**For Public App:**
+```bash
+cd public-app
+npm install
+npm run dev
+# Access at http://localhost:3001
+```
+
+**For Hospital App:**
+```bash
+cd hospital-app
+npm install
+npm run dev
+# Access at http://localhost:3002
+```
+
+#### **Step 5: Verify Installation**
+- Python Backend: http://localhost:8000/docs (FastAPI docs)
+- Rust Gateway: Check terminal for successful compilation
+- Frontend Apps: Visit respective localhost URLs
+
+### **Alternative: Docker Setup (Optional)**
+```bash
+# Build and run with Docker Compose
+docker-compose up --build
+```
 
 ---
 
