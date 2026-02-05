@@ -75,16 +75,11 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
+          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-teal-600 to-teal-400 rounded-xl p-2 shadow-md">
+            <img src="/logo.svg" alt="Swasthya" className="w-full h-full object-contain" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Hospital Staff Login
-          </h1>
           <p className="text-gray-600">
-            Access the hospital management system
+            Hospital Staff Access Portal
           </p>
         </div>
 
@@ -96,7 +91,7 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
-          <div>
+          <div className="flex items-center justify-between">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address
             </label>
@@ -105,7 +100,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="doctor@hospital.gov.in"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent transition-colors"
               required
               disabled={loading}
             />
@@ -120,10 +115,17 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent transition-colors"
               required
               disabled={loading}
             />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <label className="inline-flex items-center text-sm text-gray-600">
+              <input type="checkbox" className="mr-2" /> Remember me
+            </label>
+            <a href="#" className="text-sm text-teal-600 hover:underline">Forgot password?</a>
           </div>
 
           <button
@@ -132,7 +134,7 @@ export default function LoginPage() {
             className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
               loading 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02]'
+                : 'bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 transform hover:scale-[1.02]'
             }`}
           >
             {loading ? (
@@ -150,7 +152,7 @@ export default function LoginPage() {
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             Don't have an account?{' '}
-            <Link href="/signup" className="text-blue-600 hover:text-blue-500 font-medium">
+            <Link href="/signup" className="text-[#3b82f6] hover:text-[#2563eb] font-medium">
               Register here
             </Link>
           </p>
