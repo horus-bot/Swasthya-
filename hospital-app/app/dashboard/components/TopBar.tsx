@@ -66,8 +66,8 @@ export default function TopBar() {
           </button>
 
           {/* Avatar */}
-          <div className="h-11 w-11 rounded-full bg-gradient-to-br from-[#3b82f6] to-[#1e3a8a] flex items-center justify-center text-sm font-bold text-white shadow-md hover:shadow-lg transition-shadow cursor-pointer hover:scale-110 transform">
-            DA
+          <div className="h-11 w-11 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-sm font-bold text-white shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+            K
           </div>
 
           {/* Logout Button */}

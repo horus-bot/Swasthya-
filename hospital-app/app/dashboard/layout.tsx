@@ -124,13 +124,13 @@ export default function DashboardLayout({
           />
           <SidebarItem
             icon={<BedDouble size={18} />}
-            label="Resources"
-            href="/resources"
+            label="Resource"
+            href="/resource"
           />
           <SidebarItem
             icon={<Bell size={18} />}
             label="Notifications"
-            href="/notifications"
+            href="/Notifications"
           />
           <SidebarItem
             icon={<User size={18} />}
