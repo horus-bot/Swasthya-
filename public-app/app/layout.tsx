@@ -1,30 +1,19 @@
-"use client";
-
 import "./globals.css";
-import Header from "../components/layout/header";
-import Footer from "../components/layout/footer";
-import { usePathname } from "next/navigation";
+import ClientLayout from "../components/layout/ClientLayout";
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+export const metadata = {
+  title: "Swasthya - Public Healthcare Platform",
+  description: "Government & Public Healthcare Services",
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const isLandingPage = pathname === "/";
-
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
-        {!isLandingPage && <Header />}
-        <main className="flex-grow">{children}</main>
-        {!isLandingPage && <Footer />}
-      </body>
+      <ClientLayout>{children}</ClientLayout>
     </html>
   );
 }

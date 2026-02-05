@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import React, { Suspense, useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams } from 'next/navigation';
 
 interface Message {
   id: string;
@@ -10,7 +11,72 @@ interface Message {
   timestamp: Date;
 }
 
-export default function ChatbotPage() {
+// Simple markdown-like renderer for structured responses
+function MessageRenderer({ text }: { text: string }) {
+  const lines = text.split('\n');
+  const elements: any[] = [];
+  let key = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (line.startsWith('**') && line.endsWith('**')) {
+      // Header
+      const headerText = line.slice(2, -2);
+      elements.push(
+        <h3 key={key++} className="font-bold text-lg mb-3 mt-4 first:mt-0 text-indigo-700">
+          {headerText}
+        </h3>
+      );
+    } else if (line.startsWith('- ')) {
+      // Bullet point
+      const bulletText = line.slice(2);
+      elements.push(
+        <li key={key++} className="mb-2 ml-4 flex items-start">
+          <span className="text-indigo-500 mr-2 mt-1.5">•</span>
+          <span className="flex-1">{parseInlineMarkdown(bulletText)}</span>
+        </li>
+      );
+    } else if (line.match(/^\d+\.\s/)) {
+      // Numbered list
+      const numText = line.replace(/^\d+\.\s/, '');
+      elements.push(
+        <li key={key++} className="mb-2 ml-4 flex items-start">
+          <span className="text-indigo-500 mr-2 mt-1.5 font-medium">{line.split('.')[0]}.</span>
+          <span className="flex-1">{parseInlineMarkdown(numText)}</span>
+        </li>
+      );
+    } else if (line === '') {
+      // Empty line for spacing
+      elements.push(<div key={key++} className="h-2" />);
+    } else {
+      // Regular paragraph
+      elements.push(
+        <p key={key++} className="mb-3 leading-relaxed">
+          {parseInlineMarkdown(line)}
+        </p>
+      );
+    }
+  }
+
+  return <div className="space-y-1">{elements}</div>;
+}
+
+// Parse inline markdown (bold, italic, etc.)
+function parseInlineMarkdown(text: string): any[] {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index} className="font-semibold text-indigo-800">{part.slice(2, -2)}</strong>;
+    }
+    return <span key={index}>{part}</span>;
+  });
+}
+
+function ChatContent() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q');
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -19,7 +85,7 @@ export default function ChatbotPage() {
       timestamp: new Date(),
     },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(initialQuery || '');
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -246,7 +312,11 @@ export default function ChatbotPage() {
                         : 'bg-white text-slate-700 border-slate-100 rounded-tl-sm shadow-slate-100'
                     }`}
                   >
-                    {message.text}
+                    {message.isUser ? (
+                      <span className="whitespace-pre-wrap">{message.text}</span>
+                    ) : (
+                      <MessageRenderer text={message.text} />
+                    )}
                   </div>
                   <span className={`text-[11px] font-semibold mt-2 px-1 ${message.isUser ? 'text-indigo-300' : 'text-slate-400'}`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -337,5 +407,20 @@ export default function ChatbotPage() {
         <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-violet-300/20 rounded-full blur-[120px] mix-blend-multiply"></div>
       </div>
     </main>
+  );
+}
+
+export default function ChatbotPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+          <p className="text-slate-500 font-medium">Loading Chatbot...</p>
+        </div>
+      </div>
+    }>
+      <ChatContent />
+    </Suspense>
   );
 }
