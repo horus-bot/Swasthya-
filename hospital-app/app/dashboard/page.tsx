@@ -17,6 +17,7 @@ interface Appointment {
   condition_type: string;
   appointment_time: string;
   status: "pending" | "scheduled" | "completed" | "cancelled";
+  created_at?: string;
 }
 
 const initialAppointments: Appointment[] = [
@@ -206,7 +207,7 @@ export default function DashboardPage() {
         <StatCard title="Avg Waiting Time" value="25 min" subtitle="Emergency" />
         <StatCard 
           title="Equipment Requests" 
-          value={equipmentRequests.filter((r) => r.status === "pending").length} 
+          value={equipmentRequests.filter((r) => r.status === "pending").length.toString()} 
           subtitle="Pending" 
         />
       </div>
