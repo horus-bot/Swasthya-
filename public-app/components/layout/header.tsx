@@ -1,65 +1,101 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import "./header.css";
+import { Logo } from "../logo";
+import { Menu, X } from "lucide-react";
 
 export default function Header() {
-  return (
-    <header className="header">
-      <div className="header-container">
-        <div className="header-content">
-          {/* Logo and Brand */}
-          <div className="brand">
-            <h1 className="brand-title">Swasthya</h1>
-            <span className="brand-subtitle">Healthcare Platform</span>
-          </div>
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-          {/* Navigation Links */}
-          <nav className="nav-desktop">
-            <Link href="/home" className="nav-link">
-              Home
-            </Link>
-            <Link href="/clinics" className="nav-link">
-              Find Clinics
-            </Link>
-            <Link href="/appointments" className="nav-link">
-              Appointments
-            </Link>
-            <Link href="/reports" className="nav-link">
-              Health Reports
-            </Link>
-            <Link href="/profile" className="nav-link">
-              Profile
-            </Link>
+  return (
+    <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo and Brand */}
+          <Link href="/home" className="flex items-center space-x-3 group">
+            <Logo width={40} height={42} className="text-teal-600 group-hover:scale-105 transition-transform duration-200" />
+            <div className="flex flex-col">
+              <h1 className="text-xl font-bold text-gray-900 leading-tight">Swasthya</h1>
+              <span className="text-[10px] uppercase tracking-wider text-teal-600 font-semibold">Healthcare Platform</span>
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-1">
+            <NavItem href="/home">Home</NavItem>
+            <NavItem href="/clinics">Find Clinics</NavItem>
+            <NavItem href="/appointments">Appointments</NavItem>
+            <NavItem href="/reports">Reports</NavItem>
+            <NavItem href="/tracker">Tracker</NavItem>
+            <NavItem href="/profile">Profile</NavItem>
           </nav>
 
-          {/* Mobile menu button */}
-          <div className="mobile-menu-button">
-            <button className="menu-toggle">
-              <svg className="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+          {/* Action Button & Mobile Menu Toggle */}
+          <div className="flex items-center space-x-4">
+             {/* Emergency Button - Visible on all screens */}
+             <Link 
+              href="/instructions" 
+              className="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-full text-sm font-medium transition-colors border border-red-100 flex items-center gap-1.5 animate-pulse"
+            >
+              <span className="w-2 h-2 rounded-full bg-red-600"></span>
+              Emergency
+            </Link>
+
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-gray-500 hover:text-teal-600 focus:outline-none p-2 rounded-md hover:bg-gray-50 transition-colors"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className="nav-mobile">
-        <Link href="/home" className="nav-mobile-link">
-          Home
-        </Link>
-        <Link href="/clinics" className="nav-mobile-link">
-          Find Clinics
-        </Link>
-        <Link href="/appointments" className="nav-mobile-link">
-          Appointments
-        </Link>
-        <Link href="/reports" className="nav-mobile-link">
-          Health Reports
-        </Link>
-        <Link href="/profile" className="nav-mobile-link">
-          Profile
-        </Link>
-      </div>
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full left-0">
+          <div className="px-4 pt-2 pb-4 space-y-1">
+            <MobileNavItem href="/home" onClick={() => setIsMobileMenuOpen(false)}>Home</MobileNavItem>
+            <MobileNavItem href="/clinics" onClick={() => setIsMobileMenuOpen(false)}>Find Clinics</MobileNavItem>
+            <MobileNavItem href="/appointments" onClick={() => setIsMobileMenuOpen(false)}>Appointments</MobileNavItem>
+            <MobileNavItem href="/reports" onClick={() => setIsMobileMenuOpen(false)}>Health Reports</MobileNavItem>
+            <MobileNavItem href="/tracker" onClick={() => setIsMobileMenuOpen(false)}>Health Tracker</MobileNavItem>
+            <MobileNavItem href="/profile" onClick={() => setIsMobileMenuOpen(false)}>Profile</MobileNavItem>
+          </div>
+        </div>
+      )}
     </header>
+  );
+}
+
+function NavItem({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link 
+      href={href} 
+      className="text-gray-600 hover:text-teal-600 hover:bg-teal-50 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
+    >
+      {children}
+    </Link>
+  );
+}
+
+function MobileNavItem({ href, onClick, children }: { href: string; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <Link 
+      href={href} 
+      onClick={onClick}
+      className="block px-3 py-3 rounded-lg text-base font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+    >
+      {children}
+    </Link>
   );
 }

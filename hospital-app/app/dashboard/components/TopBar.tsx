@@ -2,6 +2,7 @@
 
 import { Bell, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Logo from "../../../components/Logo";
 
 export default function TopBar() {
   const router = useRouter();
